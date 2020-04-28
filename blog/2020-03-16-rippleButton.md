@@ -1,0 +1,98 @@
+---
+id: rippleButton
+title: 点击按钮的波纹效果
+author: Link
+author_title: 前端工程师 
+author_url: https://github.com/hehu321
+author_image_url: img/mylogo.jpg
+tags: [css, button]
+---
+css实现点击按钮的波纹效果
+<!--truncate-->
+
+### 效果展示
+
+<iframe width="100%" height="300px" src="html/ripple-button.html" frameBorder="0"></iframe>
+
+### HTML代码
+
+``` html
+	<div class="ripple-button-warp">
+	    <a href="#">button</a>
+	    <a href="#">button</a>
+	</div>
+```
+
+### CSS代码
+
+``` css 
+
+		.ripple-button-warp {
+			display: flex;
+			height: 300px;
+			background-color: #040d15;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.ripple-button-warp a {
+			position: relative;
+			color: #fff;
+			text-decoration: none;
+			padding: 12px 36px;
+			margin: 10px 0;
+			text-transform: uppercase;
+			font-size: 18px;
+			letter-spacing: 2px;
+			border-radius: 40px;
+			background: linear-gradient(90deg, #0162c8, #55e7fc);
+			user-select: none;
+			overflow: hidden;
+		}
+
+		.ripple-button-warp a:nth-child(2) {
+			background: linear-gradient(90deg, #755bea, #ff72c0);
+		}
+		.ripple-button-warp a span {
+			position: absolute;
+			background: #fff;
+			transform:translate(-50%,-50%);
+			pointer-events: none;
+			border-radius: 50%;
+			animation: animate 1s linear infinite;
+		}
+		@keyframes animate {
+			0% {
+				width: 0px;
+				height: 0px;
+				opacity: 0.5;
+			}
+			100% {
+				width: 500px;
+				height: 500px;
+				opacity: 0;
+			}
+		}
+
+``` 
+
+### JS代码
+
+``` javascript
+	const buttons = document.querySelectorAll('a');
+	buttons.forEach(btn => {
+		btn.addEventListener('click', function (e) {
+			let x = e.clientX - e.target.offsetLeft;
+			let y = e.clientY - e.target.offsetTop;
+			let ripples = document.createElement('span');
+			ripples.style.left = x + 'px';
+			ripples.style.top = y + 'px';
+			this.appendChild(ripples)
+
+			setTimeout(()=>{
+				ripples.remove()
+			},1000)
+		})
+	})
+```

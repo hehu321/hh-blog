@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			height: 300px;
+		}
+
+		#box {
+			width: 100%;
+			height: 300px;
+			box-sizing: border-box;
+			text-align: center;
+			line-height: 300px;
+			font-size: 30px;
+			border-radius: 10px;
+			border: 1px solid #333;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="box">
+		<span>移动鼠标</span>
+		<span id="num">1</span>
+	</div>
+	<script>
+		function debounce(fn, delay = 500) {
+			let timer = null
+			return function () {
+				if (timer) {
+					clearInterval(timer);
+				}
+				let callNow = !timer;
+				timer = setTimeout(() => {
+					timer = null;
+				}, delay);
+				if (callNow) {
+					fn.apply(this, arguments)
+				}
+			}
+		}
+		var box = document.getElementById('box');
+		box.addEventListener('mousemove', debounce(function (e) {
+			document.getElementById('num').innerHTML = Number(document.getElementById('num').innerHTML) + 1;
+		}))
+	</script>
+</body>
+
+</html>
